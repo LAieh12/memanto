@@ -1189,6 +1189,9 @@ class TestCWE200ApiKeyLeak:
 
         # The plaintext api_key field must NOT appear in the response
         assert "api_key" not in data
+        # Session tokens authorize memory operations and must not be exposed
+        # by the unauthenticated UI config endpoint.
+        assert "session_token" not in data
 
     @pytest.mark.asyncio
     async def test_config_endpoint_still_has_api_key_status_fields(

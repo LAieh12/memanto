@@ -2805,7 +2805,8 @@
             try {
                 S.config = await api('GET', '/api/ui/config');
                 S.agentId = S.config.active_agent_id;
-                S.token = S.config.session_token;
+                S.token = null;
+                S.config.has_active_session = false;
                 if (S.config.api_key_configured) {
                     S.apiKey = S.config.api_key || null;
                 }
@@ -2931,7 +2932,6 @@
                 S.token = session.session_token;
                 if (S.config) {
                     S.config.active_agent_id = session.agent_id;
-                    S.config.session_token = session.session_token;
                     S.config.has_active_session = true;
                 }
                 // Invalidate cached views tied to the previous agent
@@ -2955,7 +2955,6 @@
                 S.token = null;
                 if (S.config) {
                     S.config.active_agent_id = null;
-                    S.config.session_token = null;
                     S.config.has_active_session = false;
                 }
                 S._explorerLoaded = false;
